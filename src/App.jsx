@@ -1,12 +1,12 @@
-import  { useState, useEffect } from 'react';
-import { Shield, Twitter, Youtube, Twitch, Menu, X, LoaderCircle, AlertTriangle, ArrowLeft, Star, Sun, Moon, CheckCircle, Clipboard } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Shield, Twitter, Youtube, Twitch, Menu, X, LoaderCircle, AlertTriangle, ArrowLeft, Star, Sun, Moon, CheckCircle, Clipboard, Trophy } from 'lucide-react';
 
 const sponsors = [
-    { name: 'Natura', logo: 'https://placehold.co/200x100/e2e8f0/4a5568?text=Natura' },
-    { name: 'Yamaha', logo: 'https://placehold.co/200x100/e2e8f0/4a5568?text=Yamaha' },
-    { name: 'Corsair', logo: 'https://placehold.co/200x100/e2e8f0/4a5568?text=Corsair' },
-    { name: 'Intel', logo: 'https://placehold.co/200x100/e2e8f0/4a5568?text=Intel' },
-    { name: 'Logitech', logo: 'https://placehold.co/200x100/e2e8f0/4a5568?text=Logitech' },
+    { name: 'Nike', logo: '/sponsors/nike.svg' },
+    { name: 'Yamaha', logo: '/sponsors/yamaha.svg' },
+    { name: 'Corsair', logo: '/sponsors/corsair.svg' },
+    { name: 'Intel', logo: '/sponsors/intel.svg' },
+    { name: 'Logitech', logo: '/sponsors/logitech.svg' },
 ];
 
 const NavLink = ({ page, setPage, currentPage, children, isMobile, closeMenu }) => {
@@ -47,28 +47,27 @@ const ErrorMessage = ({ message }) => (
 
 const HomePage = ({ setPage }) => (
     <div className="animate-fade-in">
-        <div className="relative bg-gray-200 dark:bg-gray-800 overflow-hidden my-8 border border-gray-200 dark:border-gray-700">
-            <div className="absolute inset-0 bg-black opacity-20"></div>
-            <img src="https://placehold.co/1200x600/e5e7eb/4b5568?text=iNFAMY" alt="Banner del Equipo" className="w-full h-auto object-cover" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                <Shield className="h-16 w-16 text-red-500 drop-shadow-lg animate-pulse" />
-                <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight uppercase" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
+        <div className="relative text-center my-8 h-[60vh] md:h-[70vh] flex flex-col items-center justify-center overflow-hidden">
+             <img src="https://images.alphacoders.com/782/782653.png" alt="Hero Background" className="absolute inset-0 w-full h-full object-cover"/>
+            <div className="absolute inset-0 bg-black opacity-60"></div>
+            <div className="relative z-10 p-4">
+                <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter animate-fade-in-down" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
                     iNFAMY
                 </h1>
-                <p className="mt-4 text-lg md:text-xl text-white max-w-2xl" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
-                    Aniquilando aldeas y forjando leyendas. Somos la élite. Somos iNFAMY.
+                <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.5s', textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
+                    Nos acercamos lentamentente hacia la cima.
                 </p>
-                <button onClick={() => setPage('team')} className="mt-8 inline-block bg-black text-white font-bold py-3 px-8 hover:bg-gray-800 transition-transform transform hover:scale-105 shadow-lg">
+                <button onClick={() => setPage('team')} className="mt-10 inline-block bg-white text-black font-bold py-4 px-12 uppercase tracking-widest hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                     Conoce al Equipo
                 </button>
             </div>
         </div>
-         <div className="py-16">
+         <div className="mt-20 ">
             <h2 className="text-center text-2xl font-bold text-gray-500 dark:text-gray-400 tracking-wider uppercase mb-12">Nuestros Patrocinadores</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
                 {sponsors.map(sponsor => (
-                    <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform">
-                        <img src={sponsor.logo} alt={sponsor.name} className="max-w-full h-auto" />
+                    <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform grayscale hover:grayscale-0 opacity-60 hover:opacity-100">
+                        <img src={sponsor.logo} alt={sponsor.name} className="max-w-full h-auto dark:invert" />
                     </div>
                 ))}
             </div>
@@ -91,7 +90,7 @@ const TeamPage = ({ clanInfo, onPlayerClick }) => {
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{member.name}</h2>
                         <p className="text-blue-600 dark:text-blue-400 font-semibold mb-3">{({ leader: 'Líder', coLeader: 'Co-líder', admin: 'Veterano', member: 'Miembro' })[member.role] || member.role}</p>
                         <div className="flex justify-center gap-6 text-gray-700 dark:text-gray-300">
-                            <span>AYTO: {member.townHallLevel}</span>
+                            <span>TH: {member.townHallLevel}</span>
                             <span>Trofeos: {member.trophies}</span>
                         </div>
                     </div>
@@ -151,7 +150,7 @@ const WarDetailPage = ({ war, onBack }) => {
                         <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{war.clan.name}</span>
                     </div>
                     <span className="text-2xl font-bold my-4 md:my-0 self-center dark:text-gray-400">VS</span>
-                    <div className="flex items-center gap-4 flex-row-reverse md:justify-end">
+                    <div className="flex items-center gap-4 flex-row md:justify-end">
                         <img src={war.opponent.badgeUrls.medium} alt={war.opponent.name} className="w-16 h-16"/>
                         <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{war.opponent.name}</span>
                     </div>
@@ -170,6 +169,9 @@ const WarDetailPage = ({ war, onBack }) => {
                         <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Estrellas (Oponente)</div>
                     </div>
                 </div>
+            </div>
+             <div className="mt-8 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 p-6 text-center">
+                <p className="text-red-700 dark:text-red-300">Estamos trabajando para que se pueda ver quien atacó a quien.</p>
             </div>
         </div>
     );
@@ -244,44 +246,115 @@ const JoinUsPage = ({clanTag}) => {
     );
 };
 
-
-const PlayerDetailModal = ({ player, onClose }) => {
-    if (!player) return null;
+const HallOfFamePage = ({ clanInfo, onPlayerClick }) => {
+    const topTrophies = [...(clanInfo?.memberList || [])].sort((a,b) => b.trophies - a.trophies).slice(0, 3);
+    const topDonations = [...(clanInfo?.memberList || [])].sort((a,b) => b.donations - a.donations).slice(0, 3);
+    const rankColors = ["text-yellow-400", "text-gray-400", "text-yellow-600"];
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4" onClick={onClose}>
-            <div className="bg-white dark:bg-gray-950 w-full max-w-md mx-auto border border-gray-200 dark:border-gray-700 shadow-lg p-6 animate-fade-in" onClick={e => e.stopPropagation()}>
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{player.name}</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                        <X size={24} />
-                    </button>
-                </div>
-                <div className="flex flex-col items-center">
-                    <img src={player.league.iconUrls.medium} alt={player.league.name} className="w-40 h-40 rounded-full border-4 border-gray-200 dark:border-gray-600" />
-                    <p className="text-blue-600 dark:text-blue-400 font-semibold my-3 text-lg">{({ leader: 'Líder', coLeader: 'Co-líder', admin: 'Veterano', member: 'Miembro' })[player.role] || player.role}</p>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-4 text-center">
-                    <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Trofeos</p>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{player.trophies}</p>
-                    </div>
-                    <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Ayuntamiento</p>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{player.townHallLevel}</p>
-                    </div>
-                     <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Donaciones</p>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{player.donations}</p>
-                    </div>
-                     <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Donaciones Recibidas</p>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{player.donationsReceived}</p>
+        <div className="animate-fade-in">
+            <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Salón de la Fama</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-12">Reconocimiento a los jugadores más destacados de iNFAMY.</p>
+            
+            <div className="space-y-16">
+                <div>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Top 3 - Trofeos</h2>
+                     <div className="grid md:grid-cols-3 gap-8">
+                        {topTrophies.map((player, index) => (
+                            <div key={player.tag} onClick={() => onPlayerClick(player)} className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
+                                <span className={`text-5xl font-black ${rankColors[index]}`}>{index + 1}</span>
+                                <img src={player.league.iconUrls.medium} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{player.name}</h3>
+                                <p className="text-blue-600 dark:text-blue-400 font-semibold">{player.trophies} Trofeos</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                 <button onClick={onClose} className="mt-6 w-full bg-black text-white font-bold py-3 dark:bg-gray-900 hover:bg-gray-800 transition-colors">
-                    Cerrar
-                </button>
+
+                 <div>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Top 3 - Donaciones</h2>
+                     <div className="grid md:grid-cols-3 gap-8">
+                        {topDonations.map((player, index) => (
+                           <div key={player.tag} onClick={() => onPlayerClick(player)} className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
+                                <span className={`text-5xl font-black ${rankColors[index]}`}>{index + 1}</span>
+                                <img src={player.league.iconUrls.medium} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{player.name}</h3>
+                                <p className="text-blue-600 dark:text-blue-400 font-semibold">{player.donations} Tropas Donadas</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Mejores Atacantes de Guerra</h2>
+                    <div className="bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 p-8 text-center">
+                        <p className="text-red-700 dark:text-red-300 text-lg">Estamos trabajando para implementar esta sección. ¡Próximamente!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const PlayerDetailModal = ({ player, onClose, detailedPlayer, isLoading }) => {
+    const displayPlayer = detailedPlayer || player;
+
+    if (!displayPlayer) return null;
+
+    return (
+        <div className="fixed inset-0 backdrop-blur flex justify-center items-center z-50 p-4" onClick={onClose}>
+            <div className="bg-white dark:bg-gray-950 w-full max-w-xl mx-auto border border-gray-200 dark:border-gray-700 shadow-lg p-6 animate-fade-in" onClick={e => e.stopPropagation()}>
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-96">
+                        <LoaderCircle className="w-16 h-16 text-gray-800 dark:text-gray-200 animate-spin" />
+                    </div>
+                ) : (
+                    <>
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{displayPlayer.name}</h2>
+                            <button onClick={onClose} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                                <X size={24} />
+                            </button>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <img src={displayPlayer.league.iconUrls.medium} alt={displayPlayer.league.name} className="w-40 h-40 " />
+                            <p className="text-blue-600 dark:text-blue-400 font-semibold my-3 text-lg">{({ leader: 'Líder', coLeader: 'Co-líder', admin: 'Veterano', member: 'Miembro' })[displayPlayer.role] || displayPlayer.role}</p>
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-4 text-center">
+                            <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Trofeos</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">{displayPlayer.trophies}</p>
+                            </div>
+                            <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Máx. Trofeos</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">{displayPlayer.bestTrophies}</p>
+                            </div>
+                            <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Nivel de AY</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">{displayPlayer.townHallLevel}</p>
+                            </div>
+                             <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Estrellas de Guerra</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-white">{displayPlayer.warStars}</p>
+                            </div>
+                        </div>
+                         <div className="mt-4">
+                            <h3 className="font-bold text-center mb-2 text-gray-800 dark:text-gray-200">Héroes</h3>
+                             <div className="grid grid-cols-4 gap-2 text-center">
+                                {displayPlayer.heroes?.map(hero => (
+                                    <div key={hero.name} className="bg-gray-100 dark:bg-gray-800 p-2">
+                                        <p className="text-xs">{hero.name.replace(' King','').replace(' Queen','').replace(' Warden','').replace(' Champion','')}</p>
+                                        <p className="font-bold">{hero.level}</p>
+                                    </div>
+                                ))}
+                            </div>
+                         </div>
+                         <button onClick={onClose} className="mt-6 w-full bg-black dark:bg-gray-900 text-white font-bold py-3 hover:bg-gray-800 transition-colors">
+                            Cerrar
+                        </button>
+                    </>
+                )}
             </div>
         </div>
     );
@@ -292,6 +365,8 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedWar, setSelectedWar] = useState(null);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [detailedPlayer, setDetailedPlayer] = useState(null);
+  const [isModalLoading, setIsModalLoading] = useState(false);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
   const [clanInfo, setClanInfo] = useState(null);
@@ -332,7 +407,16 @@ export default function App() {
       root.classList.remove('dark');
     }
     localStorage.setItem('theme', theme);
-  }, [theme]);
+
+    if (selectedPlayer) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+        document.body.style.overflow = 'auto';
+    }
+  }, [theme, selectedPlayer]);
 
   const toggleTheme = () => {
       setTheme(theme === 'light' ? 'dark' : 'light');
@@ -348,12 +432,31 @@ export default function App() {
     setPage('schedule');
   };
 
-  const handlePlayerClick = (player) => {
-      setSelectedPlayer(player);
+  const handlePlayerClick = async (player) => {
+      setSelectedPlayer(player); 
+      setIsModalLoading(true);
+      setDetailedPlayer(null);
+
+      const playerTag = player.tag.replace('#', '%23');
+      const NETLIFY_FUNCTION_URL = `/.netlify/functions/get-player-details?tag=${playerTag}`;
+
+      try {
+          const response = await fetch(NETLIFY_FUNCTION_URL);
+          if (!response.ok) {
+              throw new Error('No se pudo cargar la información detallada del jugador.');
+          }
+          const data = await response.json();
+          setDetailedPlayer(data);
+      } catch (err) {
+          console.error(err);
+      } finally {
+          setIsModalLoading(false);
+      }
   }
 
   const handleCloseModal = () => {
       setSelectedPlayer(null);
+      setDetailedPlayer(null);
   }
   
   const renderPage = () => {
@@ -367,6 +470,8 @@ export default function App() {
           return <SchedulePage warLog={warLog} onWarClick={handleWarClick} />;
         case 'warDetail':
           return <WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />;
+        case 'hallOfFame':
+            return <HallOfFamePage clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />;
         case 'join':
           return <JoinUsPage clanTag={clanInfo?.tag} />;
         case 'home':
@@ -389,6 +494,7 @@ export default function App() {
                 <NavLink page="home" setPage={setPage} currentPage={page}>Inicio</NavLink>
                 <NavLink page="team" setPage={setPage} currentPage={page}>Equipo</NavLink>
                 <NavLink page="schedule" setPage={setPage} currentPage={page}>Calendario</NavLink>
+                <NavLink page="hallOfFame" setPage={setPage} currentPage={page}>Salón de la Fama</NavLink>
                 <NavLink page="join" setPage={setPage} currentPage={page}>Únete</NavLink>
               </nav>
               <button onClick={toggleTheme} className="hidden lg:flex p-2 rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800">
@@ -408,6 +514,7 @@ export default function App() {
                 <NavLink page="home" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Inicio</NavLink>
                 <NavLink page="team" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Equipo</NavLink>
                 <NavLink page="schedule" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Calendario</NavLink>
+                <NavLink page="hallOfFame" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Salón de la Fama</NavLink>
                 <NavLink page="join" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Únete</NavLink>
             </div>
             <div className="flex items-center justify-between py-4 px-4 border-t border-gray-200 dark:border-gray-800">
@@ -436,7 +543,7 @@ export default function App() {
         </footer>
       </div>
 
-       <PlayerDetailModal player={selectedPlayer} onClose={handleCloseModal} />
+       <PlayerDetailModal player={selectedPlayer} detailedPlayer={detailedPlayer} isLoading={isModalLoading} onClose={handleCloseModal} />
 
     </div>
   );
