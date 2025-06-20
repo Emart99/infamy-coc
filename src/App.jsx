@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Twitter, Youtube, Twitch, Menu, X, LoaderCircle, AlertTriangle, ArrowLeft, Star, Sun, Moon, CheckCircle, Clipboard, Trophy } from 'lucide-react';
+import { Shield, Twitter, Youtube, Twitch, Menu, X, LoaderCircle, AlertTriangle, ArrowLeft, Star, Sun, Moon, CheckCircle, Clipboard, Trophy, Swords } from 'lucide-react';
 
 const sponsors = [
     { name: 'Nike', logo: '/sponsors/nike.svg' },
@@ -100,17 +100,50 @@ const TeamPage = ({ clanInfo, onPlayerClick }) => {
     );
 };
 
-const SchedulePage = ({ warLog, onWarClick }) => (
+const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
      <div className="animate-fade-in">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Registro de Guerra</h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-8">Resultados de nuestras batallas más recientes. Haz clic en una guerra para ver más detalles.</p>
+        {currentWar && currentWar.state === 'inWar' && (
+            <div className="mb-16">
+                 <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Guerra en Vivo</h1>
+                 <p className="text-gray-600 dark:text-gray-400 mb-8">¡La batalla es ahora! Haz clic para ver los detalles.</p>
+                 <div onClick={() => onWarClick(currentWar)} className="bg-white dark:bg-gray-950 p-6 md:p-8 border-2 border-red-500 shadow-lg relative overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow">
+                    <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold uppercase px-3 py-1 animate-pulse">En Vivo</div>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center items-center">
+                        <div className="flex items-center gap-4 justify-center md:justify-start">
+                            <img src={currentWar.clan.badgeUrls.medium} alt={currentWar.clan.name} className="w-16 h-16"/>
+                            <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{currentWar.clan.name}</span>
+                        </div>
+                        <span className="text-2xl font-bold my-4 md:my-0 self-center dark:text-gray-400">VS</span>
+                        <div className="flex items-center gap-4 flex-row-reverse md:flex-row md:justify-end">
+                            <img src={currentWar.opponent.badgeUrls.medium} alt={currentWar.opponent.name} className="w-16 h-16"/>
+                            <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{currentWar.opponent.name}</span>
+                        </div>
+                    </div>
+                     <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                            <div className="text-4xl font-bold text-yellow-500 flex items-center justify-center gap-2">{currentWar.clan.stars} <Star /></div>
+                        </div>
+                        <div className="bg-gray-100 dark:bg-gray-800 p-4 flex flex-col justify-center">
+                            <div className="text-2xl font-bold text-gray-900 dark:text-white">{currentWar.clan.attacks}/{currentWar.opponent.attacks}</div>
+                            <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Ataques</div>
+                        </div>
+                        <div className="bg-gray-100 dark:bg-gray-800 p-4">
+                            <div className="text-4xl font-bold text-yellow-500 flex items-center justify-center gap-2">{currentWar.opponent.stars} <Star /></div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        )}
+
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Historial de Guerra</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-8">Resultados de nuestras batallas más recientes.</p>
         <div className="bg-white dark:bg-gray-950 overflow-hidden border border-gray-200 dark:border-gray-700">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                 {warLog.slice(0, 15).map((war, index) => {
                     const resultStyle = (r => (!r ? { text: 'En curso', color: 'yellow' } : { win: { text: 'Victoria', color: 'green' }, lose: { text: 'Derrota', color: 'red' }, tie: { text: 'Empate', color: 'gray' } }[r] || { text: r, color: 'gray' }))(war.result);
                     const resultColorClasses = { green: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300', red: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300', yellow: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300', gray: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' };
                     return (
-                        <li key={index} onClick={() => onWarClick(war)} className="p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors">
+                        <li key={index} className="p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
                             <div className="flex items-center gap-4">
                                 <img src={war.opponent.badgeUrls.small} alt="escudo oponente" className="w-10 h-10"/>
                                 <div>
@@ -136,6 +169,27 @@ const SchedulePage = ({ warLog, onWarClick }) => (
 
 const WarDetailPage = ({ war, onBack }) => {
     if (!war) return null;
+
+    const Attack = ({ attack, attackerName, defenderName }) => {
+        if (!attack) return null; // No renderiza nada si no hubo ataque
+
+        return (
+            <div className="bg-gray-100 dark:bg-gray-800 p-3 flex items-center justify-between border-l-4 border-gray-400 dark:border-gray-600">
+                <div>
+                    <p className="font-bold text-gray-800 dark:text-gray-200">{attackerName}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">atacó a {defenderName}</p>
+                </div>
+                <div className="flex items-center gap-3 text-right">
+                    <span className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1">{attack.destructionPercentage}%</span>
+                    <div className="flex">
+                        {[...Array(3)].map((_, i) => (
+                            <Star key={i} size={16} className={i < attack.stars ? 'text-yellow-500 fill-current' : 'text-gray-600'} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    };
     
     return (
         <div className="animate-fade-in">
@@ -170,9 +224,37 @@ const WarDetailPage = ({ war, onBack }) => {
                     </div>
                 </div>
             </div>
-             <div className="mt-8 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 p-6 text-center">
-                <p className="text-red-700 dark:text-red-300">Estamos trabajando para que se pueda ver quien atacó a quien.</p>
-            </div>
+            {war.clan.members ? (
+                 <div className="mt-12">
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Registro de Ataques</h2>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h3 className="text-xl font-bold text-blue-700 dark:text-blue-400 mb-4">Ataques de {war.clan.name}</h3>
+                            <div className="space-y-3">
+                                {war.clan.members?.map(member => (
+                                    member.attacks?.map((attack, index) => (
+                                        <Attack key={`${member.tag}-${index}`} attack={attack} attackerName={member.name} defenderName={war.opponent.members.find(m => m.tag === attack.defenderTag)?.name || 'Desconocido'} />
+                                    ))
+                                ))}
+                            </div>
+                        </div>
+                         <div>
+                            <h3 className="text-xl font-bold text-red-700 dark:text-red-400 mb-4">Ataques de {war.opponent.name}</h3>
+                            <div className="space-y-3">
+                                 {war.opponent.members?.map(member => (
+                                    member.attacks?.map((attack, index) => (
+                                        <Attack key={`${member.tag}-${index}`} attack={attack} attackerName={member.name} defenderName={war.clan.members.find(m => m.tag === attack.defenderTag)?.name || 'Desconocido'} />
+                                    ))
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="mt-8 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 p-6 text-center">
+                    <p className="text-red-700 dark:text-red-300">El detalle de ataques solo está disponible para guerras en curso.</p>
+                </div>
+            )}
         </div>
     );
 }
@@ -371,6 +453,7 @@ export default function App() {
 
   const [clanInfo, setClanInfo] = useState(null);
   const [warLog, setWarLog] = useState([]);
+  const [currentWar, setCurrentWar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -389,6 +472,7 @@ export default function App() {
         const data = await response.json();
         setClanInfo(data.clanInfo);
         setWarLog(data.warLog.items.filter(war=> war.result != null));
+        setCurrentWar(data.currentWar);
       } catch (err) {
         console.error("Error fetching data from Netlify Function:", err);
         setError(err.message);
@@ -467,7 +551,7 @@ export default function App() {
         case 'team':
           return <TeamPage clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />;
         case 'schedule':
-          return <SchedulePage warLog={warLog} onWarClick={handleWarClick} />;
+          return <SchedulePage warLog={warLog} currentWar={currentWar} onWarClick={handleWarClick} />;
         case 'warDetail':
           return <WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />;
         case 'hallOfFame':
