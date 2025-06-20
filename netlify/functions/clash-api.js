@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 exports.handler = async (event, context) => {
   const CLAN_TAG = '%232QC2VG82L'; 
   const API_TOKEN = process.env.CLASH_API_TOKEN; 

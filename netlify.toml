@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions/"
+  publish = "dist"
+
+[functions]
+  node_bundler = "zisi"
+
+[dev]
+  command = "npm run dev"
+  port = 8888 # Puerto para Netlify Dev (lo que abres en el navegador)
+  targetPort = 5173 # Puerto para el servidor de Vite
+  publish = "dist"
+  functions = "netlify/functions/"
