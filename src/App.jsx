@@ -1,5 +1,4 @@
-import  { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { Shield, Swords, Calendar, Users, Twitter, Youtube, Twitch, Menu, X, Crown, Skull, LogIn, Award, LoaderCircle, AlertTriangle } from 'lucide-react';
 
 const sponsors = [
@@ -36,7 +35,7 @@ const ErrorMessage = ({ message }) => (
         <h3 className="text-xl font-bold text-red-400">Ocurrió un Error al Cargar los Datos</h3>
         <p className="text-red-300 mt-2">{message}</p>
         <p className="text-xs text-gray-400 mt-4">
-           <strong>Nota Importante:</strong> El error 'CORS' o '403 Forbidden' significa que la API de Supercell denegó el acceso. Esto sucede porque no permite llamadas directas desde un navegador por seguridad. La solución definitiva y profesional es crear un servidor backend propio que haga las llamadas a la API de forma segura.
+           Asegúrate de que la Netlify Function esté desplegada y funcionando correctamente.
         </p>
     </div>
 );
@@ -44,48 +43,35 @@ const ErrorMessage = ({ message }) => (
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
   const [clanInfo, setClanInfo] = useState(null);
   const [warLog, setWarLog] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  const CLAN_TAG = '%232QC2VG82L'; 
-  const API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIxzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImRhMjE5NjY3LTU2Y2QtNDc5Yi1iNDk2LTU4NzUxZDBlM2Y0NSIsImlhdCI6MTc1MDM4NTc1MSwic3ViIjoiZGV2ZWxvcGVyLzE1NDIzYjJiLWZkNTYtNjMxMC1iYjQ3LTMxMjhjYjkxM2E2ZSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE4MS4xMTcuMTgyLjE2NCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.0_ppF7dFunpxIPc1quDfcYzWp_xeD_c1ssAK4fN9k3wvfuRysrWOh9YqdywuP9R9lcSXLcFHW1C3AxuZiGGsIw';
   
   useEffect(() => {
     const fetchClanData = async () => {
       setLoading(true);
       setError(null);
       
-      const CLAN_API_URL = `https://api.clashofclans.com/v1/clans/${CLAN_TAG}`;
-      const WARLOG_API_URL = `https://api.clashofclans.com/v1/clans/${CLAN_TAG}/warlog`;
-
-      const axiosConfig = {
-        headers: {
-          'Authorization': `Bearer ${API_TOKEN}`,
-          'Accept': 'application/json',
-        }
-      };
+      // La URL ahora apunta a tu propia Netlify Function.
+      // Esta función se encargará de llamar a la API de Supercell de forma segura.
+      const NETLIFY_FUNCTION_URL = `/.netlify/functions/clash-api`;
 
       try {
-        const [clanResponse, warLogResponse] = await Promise.all([
-          axios.get(CLAN_API_URL, axiosConfig),
-          axios.get(WARLOG_API_URL, axiosConfig)
-        ]);
+        const response = await fetch(NETLIFY_FUNCTION_URL);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error del servidor: ${response.status}`);
+        }
+        
+        const data = await response.json();
 
-        setClanInfo(clanResponse.data);
-        setWarLog(warLogResponse.data.items);
+        setClanInfo(data.clanInfo);
+        setWarLog(data.warLog.items);
 
       } catch (err) {
-        let errorMessage = err.message;
-        if (err.response) {
-            errorMessage = `Error ${err.response.status}: ${err.response.statusText}. ${err.response.data?.message || ''}`;
-        } else if (err.request) {
-            errorMessage = 'No se pudo conectar con el servidor. Verifica tu conexión o el bloqueo de CORS.';
-        }
-        console.error("Error fetching data with axios:", err);
-        setError(errorMessage);
+        console.error("Error fetching data from Netlify Function:", err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -317,7 +303,6 @@ export default function App() {
               </form>
           </div>
         </section>
-
       </main>
 
       <footer className="bg-gray-800 border-t border-gray-700 mt-12">
@@ -329,3 +314,5 @@ export default function App() {
     </div>
   );
 }
+
+
