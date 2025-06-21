@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import NavLink from "./NavLink";
 import { Menu, Moon, Shield, Sun, Twitch, Twitter, X, Youtube } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const Navbar = ({ clanInfo, setPage, page }) => {
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const navigation = useNavigate()
     useEffect(() => {
         const root = window.document.documentElement;
         if (theme === 'dark') {
@@ -25,7 +26,7 @@ const Navbar = ({ clanInfo, setPage, page }) => {
         <header className="bg-white/80 dark:bg-black/80 backdrop-blur-sm sticky top-0 z-40 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-20">
-                    <a href="#home" onClick={(e) => { e.preventDefault(); setPage('home'); }} className="flex items-center gap-3">
+                    <a onClick={(e) => { navigation('/') }} className="flex items-center gap-3">
                         {clanInfo ? <img src="https://api-assets.clashofclans.com/badges/200/H0rCkaw8vBreNBMIozcJWi-iAmLuIF0pkEnV_76jmn0.png" alt="Escudo del Clan" className="h-10 w-10" /> : <Shield className="h-8 w-8 text-gray-800 dark:text-gray-200" />}
                         <span className="text-xl font-bold text-gray-900 dark:text-white tracking-wider">iNFAMY</span>
                     </a>
@@ -52,11 +53,11 @@ const Navbar = ({ clanInfo, setPage, page }) => {
             {isMenuOpen && (
                 <div className="lg:hidden bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        <NavLink page="home" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Inicio</NavLink>
-                        <NavLink page="team" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Equipo</NavLink>
-                        <NavLink page="schedule" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Calendario</NavLink>
-                        <NavLink page="hallOfFame" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Salón de la Fama</NavLink>
-                        <NavLink page="join" setPage={setPage} currentPage={page} isMobile closeMenu={() => setIsMenuOpen(false)}>Únete</NavLink>
+                        <NavLink to="/">Inicio</NavLink>
+                        <NavLink to="/team">Equipo</NavLink>
+                        <NavLink to="/schedule">Calendario</NavLink>
+                        <NavLink to="/hall-of-fame">Salón de la Fama</NavLink>
+                        <NavLink to="/join">Únete</NavLink>
                     </div>
                     <div className="flex items-center justify-between py-4 px-4 border-t border-gray-200 dark:border-gray-800">
                         <div className="flex gap-4">
