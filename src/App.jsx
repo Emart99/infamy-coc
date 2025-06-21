@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router';
+
 import LoadingSpinner from './components/LoadingSpinner'
 import ErrorMessage from './components/ErrorMessage'
 import HomePage from './components/HomePage';
@@ -12,13 +14,12 @@ import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 
 export default function App() {
-    const [page, setPage] = useState('home');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [selectedWar, setSelectedWar] = useState(null);
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const [detailedPlayer, setDetailedPlayer] = useState(null);
     const [isModalLoading, setIsModalLoading] = useState(false);
-    
+
+    const navigate = useNavigate();
 
     const [clanInfo, setClanInfo] = useState(null);
     const [warLog, setWarLog] = useState([]);
@@ -37,7 +38,7 @@ export default function App() {
                     fetch(CLASH_API_URL),
                     fetch(CURRENT_WAR_URL)
                 ]);
-                
+
                 if (!clanResponse.ok) {
                     const errorData = await clanResponse.json();
                     throw new Error(errorData.message || `Error del servidor: ${clanResponse.status}`);
@@ -63,13 +64,14 @@ export default function App() {
 
     const handleWarClick = (war) => {
         setSelectedWar(war);
-        setPage('warDetail');
+        navigate('/schedule/war-detail');
     };
 
     const handleBackToSchedule = () => {
         setSelectedWar(null);
-        setPage('schedule');
+        navigate('/schedule');
     };
+
 
     const handlePlayerClick = async (player) => {
         setSelectedPlayer(player);
@@ -98,39 +100,27 @@ export default function App() {
         setDetailedPlayer(null);
     }
 
-    const renderPage = () => {
-        if (loading) return <LoadingSpinner />;
-        if (error) return <ErrorMessage message={error} />;
-
-        switch (page) {
-            case 'team':
-                return <TeamPage selectedPlayer={selectedPlayer} clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />;
-            case 'schedule':
-                return <SchedulePage warLog={warLog} currentWar={currentWar} onWarClick={handleWarClick} />;
-            case 'warDetail':
-                return <WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />;
-            case 'hallOfFame':
-                // En src/App.jsx, dentro de la función renderPage()
-case 'hallOfFame':
-    return <HallOfFamePage clanInfo={clanInfo} warLog={warLog} onPlayerClick={handlePlayerClick} />;
-            case 'join':
-                return <JoinUsPage clanTag={clanInfo?.tag} />;
-            case 'home':
-            default:
-                return <HomePage setPage={setPage} />;
-        }
-    };
-
     return (
         <div className="min-h-screen font-sans bg-gray-50 text-gray-800 dark:bg-black dark:text-gray-200 transition-colors duration-300">
-            <Navbar clanInfo={clanInfo} setPage={setPage} page={page} isMenuOpen={isMenuOpen} />
+            <Navbar clanInfo={clanInfo} />
             <div className={`transition-filter duration-300 ${selectedPlayer ? 'blur-sm' : ''}`}>
                 <main className="container mx-auto px-4 py-8">
-                    {renderPage()}
+                    {loading && <LoadingSpinner />}
+                    {error && <ErrorMessage message={error} />}
+                    {!loading && !error && (
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/team" element={<TeamPage clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />} />
+                            <Route path="/schedule" element={<SchedulePage warLog={warLog} currentWar={currentWar} onWarClick={handleWarClick} />} />
+                            <Route path="/schedule/war-detail" element={<WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />} />
+                            <Route path="/hall-of-fame" element={<HallOfFamePage clanInfo={clanInfo} warLog={warLog} onPlayerClick={handlePlayerClick} />} />
+                            <Route path="/join" element={<JoinUsPage clanTag={clanInfo?.tag} />} />
+                        </Routes>
+                    )}
                 </main>
             </div>
             <PlayerDetailModal player={selectedPlayer} detailedPlayer={detailedPlayer} isLoading={isModalLoading} onClose={handleCloseModal} />
-            <Footer/>
+            <Footer />
         </div>
     );
 }

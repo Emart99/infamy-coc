@@ -41,9 +41,9 @@ const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
         <div className="bg-white dark:bg-gray-950 overflow-hidden border border-gray-200 dark:border-gray-700">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                 {warLog.slice(0, 15).map((war, index) => {
-                    const opponent = war.clan.name!="iNFAMY"? war.clan : war.opponent
-                    const myClan = war.clan.name=="iNFAMY"? war.clan : war.opponent
-                    const resultStyle =winnerCalculator(myClan,opponent)
+                    const opponent = war.clan.name != "iNFAMY" ? war.clan : war.opponent
+                    const myClan = war.clan.name == "iNFAMY" ? war.clan : war.opponent
+                    const resultStyle = winnerCalculator(myClan, opponent)
                     return (
                         <li key={index} onClick={() => onWarClick(war)} className="cursor-pointer p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
                             <div className="flex items-center gap-4">
