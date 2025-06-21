@@ -41,8 +41,6 @@ const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
         <div className="bg-white dark:bg-gray-950 overflow-hidden border border-gray-200 dark:border-gray-700">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                 {warLog.slice(0, 15).map((war, index) => {
-                    console.log(war)
-
                     const opponent = war.clan.name!="iNFAMY"? war.clan : war.opponent
                     const myClan = war.clan.name=="iNFAMY"? war.clan : war.opponent
                     const resultStyle =winnerCalculator(myClan,opponent)

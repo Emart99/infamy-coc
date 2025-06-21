@@ -110,7 +110,9 @@ export default function App() {
             case 'warDetail':
                 return <WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />;
             case 'hallOfFame':
-                return <HallOfFamePage clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />;
+                // En src/App.jsx, dentro de la función renderPage()
+case 'hallOfFame':
+    return <HallOfFamePage clanInfo={clanInfo} warLog={warLog} onPlayerClick={handlePlayerClick} />;
             case 'join':
                 return <JoinUsPage clanTag={clanInfo?.tag} />;
             case 'home':
