@@ -16,7 +16,7 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
 
             <div className="space-y-16">
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Mejores atacantes en ultimas 10 guerras</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Mejores atacantes (ultimas 15 guerras)</h2>
                     {bestAttackers.length > 0 ? (
                         <div className="grid md:grid-cols-4 gap-8">
                             {bestAttackers.map((player, index) => (
@@ -43,7 +43,7 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
                     )}
                 </div>
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Peores Atacantes promedio</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Peores Atacantes promedio (ultimas 15 guerras)</h2>
                     {worstAttackers.length > 0 ? (
                         <div className="grid md:grid-cols-4 gap-8">
                             {worstAttackers.map((player, index) => (
