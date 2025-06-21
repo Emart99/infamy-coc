@@ -14,7 +14,6 @@ const TeamPage = ({ selectedPlayer,clanInfo, onPlayerClick }) => {
             document.body.style.overflow = 'auto';
         }
     },[selectedPlayer])
-    console.log(sortedMembers)
     return (
         <div className="animate-fade-in">
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Nuestro Equipo</h1>

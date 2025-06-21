@@ -2,7 +2,7 @@ exports.handler = async (event, context) => {
   const CLAN_TAG = '%232QC2VG82L'; 
 
   const CLAN_API_URL = `https://api.clashk.ing/clan/${CLAN_TAG}/basic`;
-  const WARLOG_API_URL = `https://api.clashk.ing/war/${CLAN_TAG}/previous`;
+  const WARLOG_API_URL = `https://api.clashk.ing/war/${CLAN_TAG}/previous?limit=15`;
 
   const headers = {
     'Accept': 'application/json',
