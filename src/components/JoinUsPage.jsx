@@ -41,11 +41,11 @@ const JoinUsPage = ({ clanTag }) => {
                 <ul className="space-y-4">
                     <li className="flex items-center gap-3">
                         <CheckCircle className="text-green-500" size={20} />
-                        <span className="text-gray-700 dark:text-gray-300">Ayuntamiento Nivel 15+</span>
+                        <span className="text-gray-700 dark:text-gray-300">Ayuntamiento Nivel 13+</span>
                     </li>
                     <li className="flex items-center gap-3">
                         <CheckCircle className="text-green-500" size={20} />
-                        <span className="text-gray-700 dark:text-gray-300">Héroes Nivel 80+</span>
+                        <span className="text-gray-700 dark:text-gray-300">Héroes subidos o usar pocion de heroe todas las guerras</span>
                     </li>
                     <li className="flex items-center gap-3">
                         <CheckCircle className="text-green-500" size={20} />
@@ -53,7 +53,7 @@ const JoinUsPage = ({ clanTag }) => {
                     </li>
                     <li className="flex items-center gap-3">
                         <CheckCircle className="text-green-500" size={20} />
-                        <span className="text-gray-700 dark:text-gray-300">Uso obligatorio de Discord</span>
+                        <span className="text-gray-700 dark:text-gray-300">Uso obligatorio del grupo de whatsapp</span>
                     </li>
                 </ul>
             </div>
@@ -61,10 +61,11 @@ const JoinUsPage = ({ clanTag }) => {
             <div className="mt-8 bg-white dark:bg-gray-950 p-8 border border-gray-200 dark:border-gray-700">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Paso 3: ¡Envía tu Solicitud!</h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-6">Busca nuestro tag en Clash of Clans y envía tu solicitud. ¡Te esperamos en el campo de batalla!</p>
-                <a href="#" className="inline-block bg-indigo-600 text-white font-bold py-4 px-10 hover:bg-indigo-700 transition-colors text-lg shadow-lg">
+                
+            </div>
+            <a href="#" className="inline-block mt-4 bg-indigo-600 text-white font-bold py-4 px-10 hover:bg-indigo-700 transition-colors text-lg shadow-lg">
                     Únete a Nuestro Discord
                 </a>
-            </div>
 
         </div>
     );
