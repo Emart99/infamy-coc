@@ -57,9 +57,9 @@ const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
                                 <span className={`px-4 py-1 rounded-full text-sm font-bold ${resultStyle.color}`}>{resultStyle.text}</span>
                             </div>
                             <div className="col-span-2 md:col-span-1 text-right text-lg font-bold text-gray-900 dark:text-white">
-                                <span>{war.clan.stars} <span className="text-yellow-500">★</span></span>
+                                <span>{myClan.stars} <span className="text-yellow-500">★</span></span>
                                 <span className="mx-2 text-gray-400">-</span>
-                                <span>{war.opponent.stars} <span className="text-yellow-500">★</span></span>
+                                <span>{opponent.stars} <span className="text-yellow-500">★</span></span>
                             </div>
                         </li>
                     )
