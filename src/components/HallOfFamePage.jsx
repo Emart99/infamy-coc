@@ -47,7 +47,7 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
                     {worstAttackers.length > 0 ? (
                         <div className="grid md:grid-cols-4 gap-8">
                             {worstAttackers.map((player, index) => (
-                                <div key={player.tag} onClick={() => onPlayerClick(player)} className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
+                                <div key={player.tag} className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
                                     <span className={`text-5xl font-black ${rankColors[index]}`}>{index + 1}</span>
                                     <div className="my-2">
                                         <h3 className="text-xl font-bold text-gray-900 dark:text-white">{player.name}</h3>
