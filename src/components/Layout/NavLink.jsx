@@ -8,7 +8,7 @@ const NavLink = ({ to, children, isMobile, closeMenu }) => {
 
     const handleClick = () => {
         if (isMobile && closeMenu) {
-            closeMenu();
+            closeMenu(false)
         }
     };
 

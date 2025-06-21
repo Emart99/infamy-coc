@@ -32,7 +32,7 @@ const HomePage = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
                     {sponsors.map(sponsor => (
                         <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform grayscale  opacity-60 hover:opacity-100">
-                            <img src={sponsor.logo} alt={sponsor.name} className="max-w-full h-auto dark:invert" />
+                            <img src={sponsor.logo} alt={sponsor.name} className="max-w-40 h-auto dark:invert" />
                         </div>
                     ))}
                 </div>

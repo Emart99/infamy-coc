@@ -3,7 +3,7 @@ import NavLink from "./NavLink";
 import { Menu, Moon, Shield, Sun, Twitch, Twitter, X, Youtube } from "lucide-react";
 import { useNavigate } from "react-router";
 
-const Navbar = ({ clanInfo, setPage, page }) => {
+const Navbar = ({ clanInfo }) => {
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigate()
@@ -18,7 +18,7 @@ const Navbar = ({ clanInfo, setPage, page }) => {
 
 
     }, [theme]);
-
+    
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
     }
@@ -53,11 +53,11 @@ const Navbar = ({ clanInfo, setPage, page }) => {
             {isMenuOpen && (
                 <div className="lg:hidden bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        <NavLink to="/">Inicio</NavLink>
-                        <NavLink to="/team">Equipo</NavLink>
-                        <NavLink to="/schedule">Calendario</NavLink>
-                        <NavLink to="/hall-of-fame">Salón de la Fama</NavLink>
-                        <NavLink to="/join">Únete</NavLink>
+                        <NavLink closeMenu={setIsMenuOpen} isMobile={true} to="/">Inicio</NavLink>
+                        <NavLink closeMenu={setIsMenuOpen} isMobile={true} to="/team">Equipo</NavLink>
+                        <NavLink closeMenu={setIsMenuOpen} isMobile={true} to="/schedule">Calendario</NavLink>
+                        <NavLink closeMenu={setIsMenuOpen} isMobile={true} to="/hall-of-fame">Salón de la Fama</NavLink>
+                        <NavLink closeMenu={setIsMenuOpen} isMobile={true} to="/join">Únete</NavLink>
                     </div>
                     <div className="flex items-center justify-between py-4 px-4 border-t border-gray-200 dark:border-gray-800">
                         <div className="flex gap-4">

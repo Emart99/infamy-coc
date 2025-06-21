@@ -13,10 +13,10 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
         <div className="animate-fade-in">
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Salón de la Fama</h1>
             <p className="text-gray-600 dark:text-gray-400 mb-12">Reconocimiento a los jugadores más destacados de iNFAMY.</p>
-
             <div className="space-y-16">
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Mejores atacantes (ultimas 15 guerras)</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white ">Mejores atacantes </h2>
+                    <p className="mb-4 mt-2 text-sm dark:text-gray-400 text-gray-500">Ultimas 15 guerras</p>
                     {bestAttackers.length > 0 ? (
                         <div className="grid md:grid-cols-4 gap-8">
                             {bestAttackers.map((player, index) => (
@@ -43,7 +43,8 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
                     )}
                 </div>
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Peores Atacantes promedio (ultimas 15 guerras)</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Peores Atacantes promedio</h2>
+                    <p className="mb-4 mt-2 text-sm dark:text-gray-400 text-gray-500">Ultimas 15 guerras</p>
                     {worstAttackers.length > 0 ? (
                         <div className="grid md:grid-cols-4 gap-8">
                             {worstAttackers.map((player, index) => (
@@ -69,7 +70,8 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
                     )}
                 </div>
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Trofeos</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Trofeos</h2>
+                    <p className="mb-4 mt-2 text-sm dark:text-gray-400 text-gray-500">Actualidad</p>
                     <div className="grid md:grid-cols-3 gap-8">
                         {topTrophies.map((player, index) => (
                             <div key={player.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
@@ -83,7 +85,8 @@ const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
                 </div>
 
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Donaciones</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Donaciones</h2>
+                    <p className="mb-4 mt-2 text-sm dark:text-gray-400 text-gray-500">Ultima temporada</p>
                     <div className="grid md:grid-cols-3 gap-8">
                         {topDonations.map((player, index) => (
                             <div key={player.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
