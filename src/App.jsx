@@ -44,7 +44,7 @@ export default function App() {
                 }
                 const clanData = await clanResponse.json();
                 setClanInfo(clanData.clanInfo);
-                setWarLog(clanData.warLog.items.filter(war => war.result != null));
+                setWarLog(clanData.warLog);
                 if (currentWarResponse.ok) {
                     const currentWarData = await currentWarResponse.json();
                     setCurrentWar(currentWarData);
@@ -126,9 +126,7 @@ export default function App() {
                 <main className="container mx-auto px-4 py-8">
                     {renderPage()}
                 </main>
-                
             </div>
-
             <PlayerDetailModal player={selectedPlayer} detailedPlayer={detailedPlayer} isLoading={isModalLoading} onClose={handleCloseModal} />
             <Footer/>
         </div>

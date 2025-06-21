@@ -1,7 +1,5 @@
 exports.handler = async (event, context) => {
     
-    const API_TOKEN = process.env.CLASH_API_TOKEN;
-    
     if (!event.queryStringParameters || !event.queryStringParameters.tag) {
         return {
             statusCode: 400,
@@ -13,14 +11,12 @@ exports.handler = async (event, context) => {
     }
     
     const originalTag = event.queryStringParameters.tag;
-    const playerTag = encodeURIComponent(originalTag);
     
     
-    const PLAYER_API_URL = `https://api.clashofclans.com/v1/players/${playerTag}`;
+    const PLAYER_API_URL = `https://api.clashk.ing/player/${originalTag}/stats`;
     console.log('Full URL:', PLAYER_API_URL);
     
     const headers = {
-        'Authorization': `Bearer ${API_TOKEN}`,
         'Accept': 'application/json',
     };
     
@@ -44,7 +40,7 @@ exports.handler = async (event, context) => {
             return {
                 statusCode: playerResponse.status,
                 body: JSON.stringify({ 
-                    message: `Error de la API de Supercell: ${errorBody.reason}`,
+                    message: `Error de la API: ${errorBody.reason}`,
                     url: PLAYER_API_URL,
                     status: playerResponse.status
                 }),

@@ -4,7 +4,7 @@ const PlayerDetailModal = ({ player, onClose, detailedPlayer, isLoading }) => {
     const displayPlayer = detailedPlayer || player;
 
     if (!displayPlayer) return null;
-
+    
     return (
         <div className="fixed inset-0 backdrop-blur flex justify-center items-center z-50 p-4" onClick={onClose}>
             <div className="bg-white dark:bg-gray-950 w-full max-w-xl mx-auto border border-gray-200 dark:border-gray-700 shadow-lg p-6 animate-fade-in" onClick={e => e.stopPropagation()}>
@@ -21,7 +21,7 @@ const PlayerDetailModal = ({ player, onClose, detailedPlayer, isLoading }) => {
                             </button>
                         </div>
                         <div className="flex flex-col items-center">
-                            <img src={displayPlayer.league.iconUrls.medium} alt={displayPlayer.league.name} className="w-40 h-40 " />
+                            <img src={displayPlayer.league.iconUrls} alt={displayPlayer.league.name} className="w-40 h-40 " />
                             <p className="text-blue-600 dark:text-blue-400 font-semibold my-3 text-lg">{({ leader: 'Líder', coLeader: 'Co-líder', admin: 'Veterano', member: 'Miembro' })[displayPlayer.role] || displayPlayer.role}</p>
                         </div>
                         <div className="mt-4 grid grid-cols-2 gap-4 text-center">

@@ -18,7 +18,7 @@ const HomePage = ({ setPage }) => (
                 <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.5s', textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
                     Nos acercamos lentamentente hacia la cima.
                 </p>
-                <button onClick={() => setPage('team')} className="mt-10 inline-block bg-white text-black font-bold py-4 px-12 uppercase tracking-widest hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+                <button onClick={() => setPage('team')} className="mt-10 cursor-pointer inline-block bg-white text-black font-bold py-4 px-12 uppercase tracking-widest hover:bg-gray-200 transition-all transform hover:scale-105 shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                     Conoce al Equipo
                 </button>
             </div>
@@ -27,7 +27,7 @@ const HomePage = ({ setPage }) => (
             <h2 className="text-center text-2xl font-bold text-gray-500 dark:text-gray-400 tracking-wider uppercase mb-12">Nuestros Patrocinadores</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
                 {sponsors.map(sponsor => (
-                    <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform grayscale hover:grayscale-0 opacity-60 hover:opacity-100">
+                    <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform grayscale  opacity-60 hover:opacity-100">
                         <img src={sponsor.logo} alt={sponsor.name} className="max-w-full h-auto dark:invert" />
                     </div>
                 ))}

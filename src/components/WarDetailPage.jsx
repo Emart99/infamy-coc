@@ -1,10 +1,13 @@
 import { ArrowLeft, Star } from "lucide-react";
+import winnerCalculator from "../utils/winnerCalculator";
 
 const WarDetailPage = ({ war, onBack }) => {
     if (!war) return null;
-
+    const opponent = war.clan.name!="iNFAMY"? war.clan : war.opponent
+    const myClan = war.clan.name=="iNFAMY"? war.clan : war.opponent
+    const result = winnerCalculator(myClan,opponent)
     const Attack = ({ attack, attackerName, defenderName }) => {
-        if (!attack) return null; // No renderiza nada si no hubo ataque
+        if (!attack) return null; 
 
         return (
             <div className="bg-gray-100 dark:bg-gray-800 p-3 flex items-center justify-between border-l-4 border-gray-400 dark:border-gray-600">
@@ -47,8 +50,8 @@ const WarDetailPage = ({ war, onBack }) => {
                         <div className="text-4xl font-bold text-yellow-500 flex items-center justify-center gap-2">{war.clan.stars} <Star /></div>
                         <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Estrellas (Nuestro Clan)</div>
                     </div>
-                    <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <div className={`text-4xl font-bold ${war.result === 'win' ? 'text-green-600' : war.result === 'lose' ? 'text-red-600' : 'text-gray-500'}`}>{({ win: 'VICTORIA', lose: 'DERROTA', tie: 'EMPATE' })[war.result] || 'EN CURSO'}</div>
+                    <div className={`bg-gray-100 dark:bg-gray-800 p-4 ${result.color}`}>
+                        <div className={`text-4xl font-bold `}>{result.text}</div>
                         <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Resultado Final</div>
                     </div>
                     <div className="bg-gray-100 dark:bg-gray-800 p-4">

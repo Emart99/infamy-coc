@@ -1,12 +1,10 @@
 exports.handler = async (event, context) => {
   const CLAN_TAG = '%232QC2VG82L'; 
-  const API_TOKEN = process.env.CLASH_API_TOKEN; 
 
-  const CLAN_API_URL = `https://api.clashofclans.com/v1/clans/${CLAN_TAG}`;
-  const WARLOG_API_URL = `https://api.clashofclans.com/v1/clans/${CLAN_TAG}/warlog`;
+  const CLAN_API_URL = `https://api.clashk.ing/clan/${CLAN_TAG}/basic`;
+  const WARLOG_API_URL = `https://api.clashk.ing/war/${CLAN_TAG}/previous`;
 
   const headers = {
-    'Authorization': `Bearer ${API_TOKEN}`,
     'Accept': 'application/json',
   };
 

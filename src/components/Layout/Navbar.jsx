@@ -26,7 +26,7 @@ const Navbar = ({clanInfo,setPage,page}) => {
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-20">
                         <a href="#home" onClick={(e) => { e.preventDefault(); setPage('home'); }} className="flex items-center gap-3">
-                            {clanInfo ? <img src={clanInfo.badgeUrls.small} alt="Escudo del Clan" className="h-10 w-10" /> : <Shield className="h-8 w-8 text-gray-800 dark:text-gray-200" />}
+                            {clanInfo ? <img src="https://api-assets.clashofclans.com/badges/200/H0rCkaw8vBreNBMIozcJWi-iAmLuIF0pkEnV_76jmn0.png" alt="Escudo del Clan" className="h-10 w-10" /> : <Shield className="h-8 w-8 text-gray-800 dark:text-gray-200" />}
                             <span className="text-xl font-bold text-gray-900 dark:text-white tracking-wider">iNFAMY</span>
                         </a>
                         <div className="flex items-center gap-4">

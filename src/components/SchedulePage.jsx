@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import winnerCalculator from "../utils/winnerCalculator";
 
 const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
     <div className="animate-fade-in">
@@ -40,19 +41,22 @@ const SchedulePage = ({ warLog, currentWar, onWarClick }) => (
         <div className="bg-white dark:bg-gray-950 overflow-hidden border border-gray-200 dark:border-gray-700">
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                 {warLog.slice(0, 15).map((war, index) => {
-                    const resultStyle = (r => (!r ? { text: 'En curso', color: 'yellow' } : { win: { text: 'Victoria', color: 'green' }, lose: { text: 'Derrota', color: 'red' }, tie: { text: 'Empate', color: 'gray' } }[r] || { text: r, color: 'gray' }))(war.result);
-                    const resultColorClasses = { green: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300', red: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300', yellow: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300', gray: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' };
+                    console.log(war)
+
+                    const opponent = war.clan.name!="iNFAMY"? war.clan : war.opponent
+                    const myClan = war.clan.name=="iNFAMY"? war.clan : war.opponent
+                    const resultStyle =winnerCalculator(myClan,opponent)
                     return (
-                        <li key={index} className="p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
+                        <li key={index} onClick={() => onWarClick(war)} className="cursor-pointer p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
                             <div className="flex items-center gap-4">
-                                <img src={war.opponent.badgeUrls.small} alt="escudo oponente" className="w-10 h-10" />
+                                <img src={opponent.badgeUrls.small} alt="escudo oponente" className="w-10 h-10" />
                                 <div>
-                                    <span className="font-bold text-gray-900 dark:text-white text-lg">{war.opponent.name}</span>
+                                    <span className="font-bold text-gray-900 dark:text-white text-lg">{opponent.name}</span>
                                     <span className="block text-gray-500 dark:text-gray-400 text-sm">Fin: {(iso => iso ? new Date(`${iso.substring(0, 4)}-${iso.substring(4, 6)}-${iso.substring(6, 8)}`).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : '')(war.endTime)}</span>
                                 </div>
                             </div>
                             <div className="text-right md:text-center">
-                                <span className={`px-4 py-1 rounded-full text-sm font-bold ${resultColorClasses[resultStyle.color]}`}>{resultStyle.text}</span>
+                                <span className={`px-4 py-1 rounded-full text-sm font-bold ${resultStyle.color}`}>{resultStyle.text}</span>
                             </div>
                             <div className="col-span-2 md:col-span-1 text-right text-lg font-bold text-gray-900 dark:text-white">
                                 <span>{war.clan.stars} <span className="text-yellow-500">★</span></span>

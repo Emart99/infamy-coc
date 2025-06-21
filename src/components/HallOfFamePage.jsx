@@ -1,3 +1,5 @@
+import { leagueNameToImage } from "../utils/leagueMap";
+
 const HallOfFamePage = ({ clanInfo, onPlayerClick }) => {
     const topTrophies = [...(clanInfo?.memberList || [])].sort((a, b) => b.trophies - a.trophies).slice(0, 3);
     const topDonations = [...(clanInfo?.memberList || [])].sort((a, b) => b.donations - a.donations).slice(0, 3);
@@ -15,7 +17,7 @@ const HallOfFamePage = ({ clanInfo, onPlayerClick }) => {
                         {topTrophies.map((player, index) => (
                             <div key={player.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
                                 <span className={`text-5xl font-black ${rankColors[index]}`}>{index + 1}</span>
-                                <img src={player.league.iconUrls.medium} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
+                                <img src={leagueNameToImage[player.league]} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">{player.name}</h3>
                                 <p className="text-blue-600 dark:text-blue-400 font-semibold">{player.trophies} Trofeos</p>
                             </div>
@@ -29,7 +31,7 @@ const HallOfFamePage = ({ clanInfo, onPlayerClick }) => {
                         {topDonations.map((player, index) => (
                             <div key={player.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:bg-gray-800 transition-all cursor-pointer">
                                 <span className={`text-5xl font-black ${rankColors[index]}`}>{index + 1}</span>
-                                <img src={player.league.iconUrls.medium} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
+                                <img src={leagueNameToImage[player.league]} alt={player.league.name} className="w-24 h-24 mx-auto my-4" />
                                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">{player.name}</h3>
                                 <p className="text-blue-600 dark:text-blue-400 font-semibold">{player.donations} Tropas Donadas</p>
                             </div>
