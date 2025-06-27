@@ -20,8 +20,8 @@ const TeamPage = ({ selectedPlayer,clanInfo, onPlayerClick }) => {
             <p className="text-gray-600 dark:text-gray-400 mb-8">Los arquitectos de la victoria. Haz clic en un jugador para ver sus detalles.</p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {sortedMembers.map(member => (
-                    // onClick={() => onPlayerClick(member)}
-                    <div key={member.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:bg-gray-800 transition-all cursor-pointer">
+                     
+                    <div  key={member.tag}  className="bg-white dark:bg-gray-950 p-6 text-center border border-gray-200 dark:border-gray-700 hover:shadow-md dark:hover:bg-gray-800 transition-all cursor-pointer">
                         <img src={leagueNameToImage[member.league]} alt={member.league} className="w-32 h-32 mx-auto mb-4" />
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{member.name}</h2>
                         <p className="text-blue-600 dark:text-blue-400 font-semibold mb-3">{({ leader: 'Líder', coLeader: 'Co-líder', admin: 'Veterano', member: 'Miembro' })[member.role] || member.role}</p>

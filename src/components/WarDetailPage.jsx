@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LoaderCircle, PlusCircle, MinusCircle, Star } from 'lucide-react';
+import { LoaderCircle, Star, Plus, Minus } from 'lucide-react';
 import { useParams } from 'react-router';
 
 const AttackColumn = ({ title, attack, opponentMembers }) => {
@@ -46,7 +46,7 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="p-2 border-b border-gray-300 dark:border-gray-600 cursor-pointer" onClick={() => setIsExpanded(prev => !prev)} >
+        <div className="p-2 border-b border-gray-300 dark:border-gray-600 ">
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <span className="mr-4 text-lg font-bold">{player.mapPosition}</span>
@@ -55,11 +55,11 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
                         <p className="text-sm text-gray-700 dark:text-gray-200">TH {player.townhallLevel}</p>
                     </div>
                 </div>
-                <button onClick={() => setIsExpanded(!isExpanded)} className="focus:outline-none cursor-pointer">
+                <button onClick={() => setIsExpanded(prev => !prev)} className="focus:outline-none cursor-pointer">
                     {isExpanded ? (
-                        <MinusCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                        <Minus className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     ) : (
-                        <PlusCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                        <Plus className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     )}
                 </button>
             </div>
@@ -101,7 +101,7 @@ const WarDetailPage = ({ warLog, currentWar }) => {
     const sortedOpponentMembers = [...war.opponent.members].sort((a, b) => a.mapPosition - b.mapPosition);
     console.log()
     return (
-        <div className="p-4 md:p-8 bg-gray-200 rounded-sm dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
+        <div className="p-4 md:p-8 bg-gray-200 dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                     <div className="flex justify-center gap-2">
