@@ -12,3 +12,8 @@
   targetPort = 5173 # Puerto para el servidor de Vite
   publish = "dist"
   functions = "netlify/functions/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
