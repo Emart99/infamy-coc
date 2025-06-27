@@ -45,7 +45,7 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="p-2 border-b border-gray-300 dark:border-gray-600 cursor-pointer" onClick={()=>setIsExpanded(prev => !prev)} >
+        <div className="p-2 border-b border-gray-300 dark:border-gray-600 cursor-pointer" onClick={() => setIsExpanded(prev => !prev)} >
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <span className="mr-4 text-lg font-bold">{player.mapPosition}</span>
@@ -66,8 +66,8 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
                 <div className="dark:bg-gray-950 bg-gray-200 p-4 rounded-md mt-2">
                     {attacks?.length > 0 ? (
                         <div className="grid grid-cols-2 gap-4">
-                           <AttackColumn title="Ataque 1" attack={attacks[0]} opponentMembers={opponentMembers} />
-                           <AttackColumn title="Ataque 2" attack={attacks[1]} opponentMembers={opponentMembers} />
+                            <AttackColumn title="Ataque 1" attack={attacks[0]} opponentMembers={opponentMembers} />
+                            <AttackColumn title="Ataque 2" attack={attacks[1]} opponentMembers={opponentMembers} />
                         </div>
                     ) : (
                         <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-2">No realizo ataques.</p>
@@ -86,34 +86,41 @@ const WarDetailPage = ({ war }) => {
             </div>
         );
     }
-    
+
     const sortedClanMembers = [...war.clan.members].sort((a, b) => a.mapPosition - b.mapPosition);
     const sortedOpponentMembers = [...war.opponent.members].sort((a, b) => a.mapPosition - b.mapPosition);
-
+    console.log()
     return (
         <div className="p-4 md:p-8 bg-gray-200 rounded-sm dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.clan.name}</h1>
+                    <div className="flex justify-center gap-2">
+                        <img src={war.clan.badgeUrls.small} className="h-10 w-10" />
+                        <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.clan.name}</h1>
+                    </div>
+
                     <div className="bg-gray-100 dark:bg-gray-900 p-4">
                         {sortedClanMembers.map(player => (
-                            <PlayerCard 
-                                key={player.tag} 
-                                player={player} 
-                                attacks={player.attacks} 
-                                opponentMembers={sortedOpponentMembers} 
+                            <PlayerCard
+                                key={player.tag}
+                                player={player}
+                                attacks={player.attacks}
+                                opponentMembers={sortedOpponentMembers}
                             />
                         ))}
                     </div>
                 </div>
                 <div>
-                    <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.opponent.name}</h1>
+                    <div className="flex justify-center gap-2">
+                        <img src={war.opponent.badgeUrls.small} className="h-10 w-10" />
+                        <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.opponent.name}</h1>
+                    </div>
                     <div className="bg-gray-100 dark:bg-gray-900 p-4">
                         {sortedOpponentMembers.map(player => (
-                            <PlayerCard 
-                                key={player.tag} 
-                                player={player} 
-                                attacks={player.attacks} 
+                            <PlayerCard
+                                key={player.tag}
+                                player={player}
+                                attacks={player.attacks}
                                 opponentMembers={sortedClanMembers}
                             />
                         ))}
