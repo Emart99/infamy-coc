@@ -15,11 +15,9 @@ const AttackColumn = ({ title, attack, opponentMembers }) => {
 
     const renderStars = (starCount) => {
         const stars = [];
-        // Gray stars (unearned)
         for (let i = 0; i < 3 - starCount; i++) {
             stars.push(<Star key={`gray-${i}`} className="w-5 h-5 text-gray-500" />);
         }
-        // Yellow stars (earned)
         for (let i = 0; i < starCount; i++) {
             stars.push(<Star key={`yellow-${i}`} className="w-5 h-5 text-yellow-400 fill-current" />);
         }
@@ -34,10 +32,11 @@ const AttackColumn = ({ title, attack, opponentMembers }) => {
                     <span className="font-bold">{defender.mapPosition}</span>. {defender.name}
                 </p>
             )}
-            <div className="mt-1">
+            <div className="mt-1 flex justify-center items-center gap-2">
                 {renderStars(attack.stars)}
+                <p className="text-sm font-semibold">{attack.destructionPercentage}%</p>
+
             </div>
-            <p className="text-sm font-semibold">{attack.destructionPercentage}%</p>
         </div>
     );
 };
@@ -46,13 +45,13 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="p-2 border-b border-gray-300 dark:border-gray-600">
+        <div className="p-2 border-b border-gray-300 dark:border-gray-600 cursor-pointer" onClick={()=>setIsExpanded(prev => !prev)} >
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <span className="mr-4 text-lg font-bold">{player.mapPosition}</span>
                     <div>
                         <p className="font-semibold text-black dark:text-white">{player.name}</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-200">Town Hall {player.townhallLevel}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-200">TH {player.townhallLevel}</p>
                     </div>
                 </div>
                 <button onClick={() => setIsExpanded(!isExpanded)} className="focus:outline-none cursor-pointer">
@@ -67,11 +66,11 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
                 <div className="dark:bg-gray-950 bg-gray-200 p-4 rounded-md mt-2">
                     {attacks?.length > 0 ? (
                         <div className="grid grid-cols-2 gap-4">
-                           <AttackColumn title="Attack 1" attack={attacks[0]} opponentMembers={opponentMembers} />
-                           <AttackColumn title="Attack 2" attack={attacks[1]} opponentMembers={opponentMembers} />
+                           <AttackColumn title="Ataque 1" attack={attacks[0]} opponentMembers={opponentMembers} />
+                           <AttackColumn title="Ataque 2" attack={attacks[1]} opponentMembers={opponentMembers} />
                         </div>
                     ) : (
-                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-2">No attacks made.</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-2">No realizo ataques.</p>
                     )}
                 </div>
             )}

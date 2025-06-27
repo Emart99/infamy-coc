@@ -47,7 +47,7 @@ const SchedulePage = ({ warLog, currentWar, onWarClick }) => {
                         const myClan = war.clan.name == "iNFAMY" ? war.clan : war.opponent
                         const resultStyle = winnerCalculator(myClan, opponent)
                         return (
-                            <li key={index} onClick={() => onWarClick(war)} className="cursor-pointer p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4">
+                            <li key={index} onClick={() => onWarClick(war)} className="cursor-pointer p-4 md:p-6 grid grid-cols-2 md:grid-cols-3 items-center gap-4 hover:shadow-sm dark:hover:bg-gray-800 transition-all ">
                                 <div className="flex items-center gap-4">
                                     <img src={opponent.badgeUrls.small} alt="escudo oponente" className="w-10 h-10" />
                                     <div>
