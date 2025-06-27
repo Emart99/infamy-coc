@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { LoaderCircle, Star, Plus, Minus } from 'lucide-react';
-import { useParams } from 'react-router';
+import { LoaderCircle, Star, Plus, Minus, ArrowLeft } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router';
 import winnerCalculator from "../utils/winnerCalculator";
 
 
@@ -48,7 +48,7 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="p-2 border-b border-gray-300 dark:border-gray-600 ">
+        <div onClick={() => setIsExpanded(prev => !prev)} className="cursor-pointer p-2 border-b border-gray-300 dark:border-gray-600 ">
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <span className="mr-4 text-lg font-bold">{player.mapPosition}</span>
@@ -57,7 +57,7 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
                         <p className="text-sm text-gray-700 dark:text-gray-200">TH {player.townhallLevel}</p>
                     </div>
                 </div>
-                <button onClick={() => setIsExpanded(prev => !prev)} className="focus:outline-none cursor-pointer">
+                <button  className="focus:outline-none ">
                     {isExpanded ? (
                         <Minus className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     ) : (
@@ -112,9 +112,15 @@ const WarDetailPage = ({ warLog, currentWar }) => {
     
     const sortedClanMembers = [...myClan.members].sort((a, b) => a.mapPosition - b.mapPosition);
     const sortedOpponentMembers = [...opponent.members].sort((a, b) => a.mapPosition - b.mapPosition);
-    console.log()
+    const nav = useNavigate()
     return (
-        <div className="p-4 md:p-8 bg-gray-200 dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
+        <div>
+            <button onClick={()=> nav('/schedule')} className="inline-flex items-center gap-2 bg-black dark:bg-gray-800 cursor-pointer text-white font-bold py-2 px-4 mb-2 hover:bg-gray-700 transition-colors">
+                <ArrowLeft size={16} />
+                Volver al Calendario
+            </button>
+            <div className="p-4 md:p-8 bg-gray-200 dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
+             
             <div className="grid grid-cols-2 md:grid-cols-3 items-center w-full gap-2 md:gap-8 mb-6">
                 <div className="flex flex-col items-start">
                     <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
@@ -196,6 +202,8 @@ const WarDetailPage = ({ warLog, currentWar }) => {
                 </div>
             </div>
         </div>
+        </div>
+        
     );
 };
 
