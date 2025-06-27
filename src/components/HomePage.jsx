@@ -29,7 +29,7 @@ const HomePage = () => {
             </div>
             <div className="mt-20 ">
                 <h2 className="text-center text-2xl font-bold text-gray-500 dark:text-gray-400 tracking-wider uppercase mb-12">Nuestros Patrocinadores</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
                     {sponsors.map(sponsor => (
                         <div key={sponsor.name} className="flex justify-center items-center transform hover:scale-110 transition-transform grayscale  opacity-60 hover:opacity-100">
                             <img src={sponsor.logo} alt={sponsor.name} className="max-w-40 h-auto dark:invert" />

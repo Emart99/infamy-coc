@@ -57,7 +57,7 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
                         <p className="text-sm text-gray-700 dark:text-gray-200">TH {player.townhallLevel}</p>
                     </div>
                 </div>
-                <button  className="focus:outline-none ">
+                <button  className="focus:outline-none">
                     {isExpanded ? (
                         <Minus className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     ) : (
