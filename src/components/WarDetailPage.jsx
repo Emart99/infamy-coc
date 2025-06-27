@@ -1,97 +1,128 @@
-import { ArrowLeft, Star } from "lucide-react";
-import winnerCalculator from "../utils/winnerCalculator";
+import { useState } from 'react';
+import { LoaderCircle, PlusCircle, MinusCircle, Star } from 'lucide-react';
 
-const WarDetailPage = ({ war, onBack }) => {
-    if (!war) return null;
-    const opponent = war.clan.name!="iNFAMY"? war.clan : war.opponent
-    const myClan = war.clan.name=="iNFAMY"? war.clan : war.opponent
-    const result = winnerCalculator(myClan,opponent)
-    const Attack = ({ attack, attackerName, defenderName }) => {
-        if (!attack) return null; 
-
+const AttackColumn = ({ title, attack, opponentMembers }) => {
+    if (!attack) {
         return (
-            <div className="bg-gray-100 dark:bg-gray-800 p-3 flex items-center justify-between border-l-4 border-gray-400 dark:border-gray-600">
-                <div>
-                    <p className="font-bold text-gray-800 dark:text-gray-200">{attackerName}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">atacó a {defenderName}</p>
-                </div>
-                <div className="flex items-center gap-3 text-right">
-                    <span className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1">{attack.destructionPercentage}%</span>
-                    <div className="flex">
-                        {[...Array(3)].map((_, i) => (
-                            <Star key={i} size={16} className={i < attack.stars ? 'text-yellow-500 fill-current' : 'text-gray-600'} />
-                        ))}
-                    </div>
-                </div>
+            <div>
+                <h3 className="font-bold text-md text-center">{title}</h3>
+                <p className="text-sm text-center text-gray-500 dark:text-gray-400 mt-2">Not used</p>
             </div>
         );
+    }
+
+    const defender = opponentMembers.find(member => member.tag === attack.defenderTag);
+
+    const renderStars = (starCount) => {
+        const stars = [];
+        // Gray stars (unearned)
+        for (let i = 0; i < 3 - starCount; i++) {
+            stars.push(<Star key={`gray-${i}`} className="w-5 h-5 text-gray-500" />);
+        }
+        // Yellow stars (earned)
+        for (let i = 0; i < starCount; i++) {
+            stars.push(<Star key={`yellow-${i}`} className="w-5 h-5 text-yellow-400 fill-current" />);
+        }
+        return <div className="flex justify-center space-x-1">{stars}</div>;
     };
 
     return (
-        <div className="animate-fade-in">
-            <button onClick={onBack} className="inline-flex items-center gap-2 bg-black text-white font-bold py-2 px-4 mb-8 hover:bg-gray-800 transition-colors">
-                <ArrowLeft size={16} />
-                Volver al Calendario
-            </button>
-            <div className="bg-white dark:bg-gray-950 p-6 md:p-8 border border-gray-200 dark:border-gray-700">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center items-center">
-                    <div className="flex items-center gap-4 justify-start">
-                        <img src={war.clan.badgeUrls.medium} alt={war.clan.name} className="w-16 h-16" />
-                        <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{war.clan.name}</span>
-                    </div>
-                    <span className="text-2xl font-bold my-4 md:my-0 self-center dark:text-gray-400">VS</span>
-                    <div className="flex items-center gap-4 flex-row md:justify-end">
-                        <img src={war.opponent.badgeUrls.medium} alt={war.opponent.name} className="w-16 h-16" />
-                        <span className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{war.opponent.name}</span>
-                    </div>
-                </div>
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <div className="text-4xl font-bold text-yellow-500 flex items-center justify-center gap-2">{war.clan.stars} <Star /></div>
-                        <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Estrellas (Nuestro Clan)</div>
-                    </div>
-                    <div className={`bg-gray-100 dark:bg-gray-800 p-4 ${result.color}`}>
-                        <div className={`text-4xl font-bold `}>{result.text}</div>
-                        <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Resultado Final</div>
-                    </div>
-                    <div className="bg-gray-100 dark:bg-gray-800 p-4">
-                        <div className="text-4xl font-bold text-yellow-500 flex items-center justify-center gap-2">{war.opponent.stars} <Star /></div>
-                        <div className="text-gray-500 dark:text-gray-400 text-sm mt-1">Estrellas (Oponente)</div>
-                    </div>
-                </div>
+        <div className="text-center">
+            <h3 className="font-bold text-md">{title}</h3>
+            {defender && (
+                <p className="text-sm mt-2">
+                    <span className="font-bold">{defender.mapPosition}</span>. {defender.name}
+                </p>
+            )}
+            <div className="mt-1">
+                {renderStars(attack.stars)}
             </div>
-            {war.clan.members ? (
-                <div className="mt-12">
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center">Registro de Ataques</h2>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div>
-                            <h3 className="text-xl font-bold text-blue-700 dark:text-blue-400 mb-4">Ataques de {war.clan.name}</h3>
-                            <div className="space-y-3">
-                                {war.clan.members?.map(member => (
-                                    member.attacks?.map((attack, index) => (
-                                        <Attack key={`${member.tag}-${index}`} attack={attack} attackerName={member.name} defenderName={war.opponent.members.find(m => m.tag === attack.defenderTag)?.name || 'Desconocido'} />
-                                    ))
-                                ))}
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold text-red-700 dark:text-red-400 mb-4">Ataques de {war.opponent.name}</h3>
-                            <div className="space-y-3">
-                                {war.opponent.members?.map(member => (
-                                    member.attacks?.map((attack, index) => (
-                                        <Attack key={`${member.tag}-${index}`} attack={attack} attackerName={member.name} defenderName={war.clan.members.find(m => m.tag === attack.defenderTag)?.name || 'Desconocido'} />
-                                    ))
-                                ))}
-                            </div>
-                        </div>
+            <p className="text-sm font-semibold">{attack.destructionPercentage}%</p>
+        </div>
+    );
+};
+
+const PlayerCard = ({ player, attacks, opponentMembers }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <div className="p-2 border-b border-gray-300 dark:border-gray-600">
+            <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                    <span className="mr-4 text-lg font-bold">{player.mapPosition}</span>
+                    <div>
+                        <p className="font-semibold text-black dark:text-white">{player.name}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-200">Town Hall {player.townhallLevel}</p>
                     </div>
                 </div>
-            ) : (
-                <div className="mt-8 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 p-6 text-center">
-                    <p className="text-red-700 dark:text-red-300">El detalle de ataques solo está disponible para guerras en curso.</p>
+                <button onClick={() => setIsExpanded(!isExpanded)} className="focus:outline-none cursor-pointer">
+                    {isExpanded ? (
+                        <MinusCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    ) : (
+                        <PlusCircle className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    )}
+                </button>
+            </div>
+            {isExpanded && (
+                <div className="dark:bg-gray-950 bg-gray-200 p-4 rounded-md mt-2">
+                    {attacks?.length > 0 ? (
+                        <div className="grid grid-cols-2 gap-4">
+                           <AttackColumn title="Attack 1" attack={attacks[0]} opponentMembers={opponentMembers} />
+                           <AttackColumn title="Attack 2" attack={attacks[1]} opponentMembers={opponentMembers} />
+                        </div>
+                    ) : (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-2">No attacks made.</p>
+                    )}
                 </div>
             )}
         </div>
     );
-}
+};
+
+const WarDetailPage = ({ war }) => {
+    if (!war) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <LoaderCircle className="w-12 h-12 text-gray-800 dark:text-gray-200 animate-spin" />
+            </div>
+        );
+    }
+    
+    const sortedClanMembers = [...war.clan.members].sort((a, b) => a.mapPosition - b.mapPosition);
+    const sortedOpponentMembers = [...war.opponent.members].sort((a, b) => a.mapPosition - b.mapPosition);
+
+    return (
+        <div className="p-4 md:p-8 bg-gray-200 rounded-sm dark:bg-gray-950 dark:border-gray-600 border-gray-300 border dark:text-gray-200 min-h-screen">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.clan.name}</h1>
+                    <div className="bg-gray-100 dark:bg-gray-900 p-4">
+                        {sortedClanMembers.map(player => (
+                            <PlayerCard 
+                                key={player.tag} 
+                                player={player} 
+                                attacks={player.attacks} 
+                                opponentMembers={sortedOpponentMembers} 
+                            />
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <h1 className="text-4xl font-bold dark:text-white text-center pb-6">{war.opponent.name}</h1>
+                    <div className="bg-gray-100 dark:bg-gray-900 p-4">
+                        {sortedOpponentMembers.map(player => (
+                            <PlayerCard 
+                                key={player.tag} 
+                                player={player} 
+                                attacks={player.attacks} 
+                                opponentMembers={sortedClanMembers}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export default WarDetailPage;

@@ -1,6 +1,5 @@
 import { calculateWarHallOfFame, calculateWorstAttackers } from "../utils/warAttackAnalisis"; 
 import { leagueNameToImage } from "../utils/leagueMap";
-import { Star } from "lucide-react";
 
 const HallOfFamePage = ({ clanInfo, warLog, onPlayerClick }) => {
     const topTrophies = [...(clanInfo?.memberList || [])].sort((a, b) => b.trophies - a.trophies).slice(0, 3);

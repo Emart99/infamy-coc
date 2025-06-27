@@ -2,7 +2,6 @@ import { Star } from "lucide-react";
 import winnerCalculator from "../utils/winnerCalculator";
 
 const SchedulePage = ({ warLog, currentWar, onWarClick }) => {
-    console.log(currentWar)
     
     return (
         <div className="animate-fade-in">

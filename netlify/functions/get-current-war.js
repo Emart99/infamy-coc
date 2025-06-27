@@ -2,7 +2,6 @@ exports.handler = async (event, context) => {
     const CLAN_TAG = '%232QC2VG82L'; 
 
     const CURRENT_WAR_API_URL = `https://api.clashk.ing/war/${CLAN_TAG}/basic`;
-    console.log('Full URL:', CURRENT_WAR_API_URL);
 
     const headers = {
         'Accept': 'application/json',
@@ -11,8 +10,6 @@ exports.handler = async (event, context) => {
     try {
         const warResponse = await fetch(CURRENT_WAR_API_URL, { headers });
         
-        console.log('Response status:', warResponse.status);
-        console.log('Response headers:', Object.fromEntries(warResponse.headers.entries()));
         
         if (!warResponse.ok) {
             const errorText = await warResponse.text();
