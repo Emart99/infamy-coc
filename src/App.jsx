@@ -62,10 +62,11 @@ export default function App() {
         fetchClanData();
     }, []);
 
-    const handleWarClick = (war) => {
-        setSelectedWar(war);
-        navigate('/schedule/war-detail');
-    };
+    const handleWarClick = (war, isCurrentWar = false) => {
+        const warId = isCurrentWar ? 'current' : war.endTime;
+        navigate(`/schedule/war-detail/${warId}`);
+     };
+
 
     const handleBackToSchedule = () => {
         setSelectedWar(null);
@@ -111,8 +112,8 @@ export default function App() {
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/team" element={<TeamPage clanInfo={clanInfo} onPlayerClick={handlePlayerClick} />} />
-                            <Route path="/schedule" element={<SchedulePage warLog={warLog} currentWar={currentWar} onWarClick={handleWarClick} />} />
-                            <Route path="/schedule/war-detail" element={<WarDetailPage war={selectedWar} onBack={handleBackToSchedule} />} />
+                            <Route path="/schedule" element={<SchedulePage warLog={warLog} currentWar={currentWar} onWarClick={(war) => handleWarClick(war)} onCurrentWarClick={(war) => handleWarClick(war, true)} />} />
+                            <Route path="/schedule/war-detail/:warId" element={<WarDetailPage warLog={warLog} currentWar={currentWar} onBack={handleBackToSchedule} />} />
                             <Route path="/hall-of-fame" element={<HallOfFamePage clanInfo={clanInfo} warLog={warLog} onPlayerClick={handlePlayerClick} />} />
                             <Route path="/join" element={<JoinUsPage clanTag={clanInfo?.tag} />} />
                         </Routes>

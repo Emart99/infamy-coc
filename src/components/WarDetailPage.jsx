@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { LoaderCircle, PlusCircle, MinusCircle, Star } from 'lucide-react';
+import { useParams } from 'react-router';
 
 const AttackColumn = ({ title, attack, opponentMembers }) => {
     if (!attack) {
@@ -78,7 +79,16 @@ const PlayerCard = ({ player, attacks, opponentMembers }) => {
     );
 };
 
-const WarDetailPage = ({ war }) => {
+const WarDetailPage = ({ warLog, currentWar }) => {
+    const { warId } = useParams();
+
+    let war = null;
+    if (warId === 'current') {
+        war = currentWar;
+    } else {
+        war = warLog.find(w => w.endTime === warId);
+    }
+
     if (!war) {
         return (
             <div className="flex justify-center items-center h-screen">

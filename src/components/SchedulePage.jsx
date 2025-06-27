@@ -1,15 +1,16 @@
 import { Star } from "lucide-react";
 import winnerCalculator from "../utils/winnerCalculator";
 
-const SchedulePage = ({ warLog, currentWar, onWarClick }) => {
-    
+const SchedulePage = ({ warLog, currentWar, onWarClick, onCurrentWarClick }) => {
+
     return (
         <div className="animate-fade-in">
             {currentWar && currentWar.state === 'inWar' && (
                 <div className="mb-16">
                     <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">Guerra en Vivo</h1>
                     <p className="text-gray-600 dark:text-gray-400 mb-8">¡La batalla es ahora! Haz clic para ver los detalles.</p>
-                    <div onClick={() => onWarClick(currentWar)} className="bg-white dark:bg-gray-950 p-6 md:p-8 border-2 border-red-500 shadow-lg relative overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow">
+                    <div onClick={() => onCurrentWarClick(currentWar)} className="bg-white dark:bg-gray-950 p-6 md:p-8 border-2 border-red-500 shadow-lg relative overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow">
+
                         <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold uppercase px-3 py-1 animate-pulse">En Vivo</div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center items-center">
                             <div className="flex items-center gap-4 justify-center md:justify-start">
